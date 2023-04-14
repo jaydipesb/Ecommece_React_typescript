@@ -3,10 +3,12 @@ import { UploadOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
 import axios from "axios";
 
-const Addproduct = ({ isModalVisible, setIsModalVisible }:any) => {
+const Addproduct = ({ isModalVisible, setIsModalVisible }:{ isModalVisible : boolean; setIsModalVisible: (flage:boolean) => void;}) => {
 
   const [state, setState] = useState("");
 
+  console.log("state", state);
+  
   const handleOk = () => {
     setIsModalVisible(false);
   };
@@ -14,7 +16,7 @@ const Addproduct = ({ isModalVisible, setIsModalVisible }:any) => {
     setIsModalVisible(false);
   };
 
-  const handleChange = (info:any) => {
+  const handleChange = (info: { file: any; }) => {
     setState(info.file);
   };
  

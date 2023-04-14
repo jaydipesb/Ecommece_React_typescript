@@ -6,9 +6,11 @@ import axios from "axios";
 
 
 
-const EditProduct = ({ editModel, setEditModel, editData }:{ editModel : boolean; setEditModel: (flage:boolean) => void; editData: {
-  EditProduct: any;id: number,  title:string, price:number, description: string,category: string,image:string 
-} }) => {
+const EditProduct = ({ editModel, setEditModel, editData }: {
+  editModel: boolean; setEditModel: (flage: boolean) => void; editData: {
+    EditProduct: { id: string, title: string, price: number, description: string, category: string, image: string }
+  }
+}) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [state, setState] = useState("");
@@ -24,14 +26,19 @@ const EditProduct = ({ editModel, setEditModel, editData }:{ editModel : boolean
     image: editData?.EditProduct?.image,
   });
 
-  const handleChange = (info:any) => {
+  interface Info {
+    [key: string]: any
+  }
+
+  const handleChange = (info: Info) => {
+    console.log("info", info);
     setState(info.file);
   };
   const handleCancel = () => {
     setEditModel(false);
   };
 
-  const onFinish = async (values:{category:string,description:string,image:string,price:string,title:string}) => {
+  const onFinish = async (values: { category: string, description: string, image: string, price: string, title: string }) => {
     console.log(values);
     try {
       const formData = new FormData();
@@ -106,7 +113,7 @@ const EditProduct = ({ editModel, setEditModel, editData }:{ editModel : boolean
           >
             <Input />
           </Form.Item>
-            
+
           <Form.Item
 
             label="Description"
@@ -138,10 +145,10 @@ const EditProduct = ({ editModel, setEditModel, editData }:{ editModel : boolean
             label="Image"
             name="image"
             rules={[
-                {
-                    required: false,
-                    message: 'input Image',
-                },
+              {
+                required: false,
+                message: 'input Image',
+              },
             ]}
           >
             <Upload

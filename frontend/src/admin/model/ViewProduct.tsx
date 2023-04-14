@@ -1,16 +1,20 @@
 import React from "react";
-import {Modal} from 'antd';
+import { Modal } from 'antd';
 
 
 
-const ViewProduct = ({ viewModel, setViewModel, viewData }:any) => {
-    const handleOk = () =>{
-        setViewModel(false);
-    }
+const ViewProduct = ({ viewModel, setViewModel, viewData }: {
+  viewModel: boolean; setViewModel: (flage: boolean) => void; viewData: {
+    productData: { id: number, title: string, price: number, description: string, category: string, image: string
+     } }
+}) => {
+  const handleOk = () => {
+    setViewModel(false);
+  }
 
-    const handleCancel = () => {
-        setViewModel(false);
-    }
+  const handleCancel = () => {
+    setViewModel(false);
+  }
   return (
     <div>
       <Modal

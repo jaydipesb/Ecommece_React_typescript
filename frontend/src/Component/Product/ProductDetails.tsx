@@ -17,132 +17,161 @@ const ProductDetails = () => {
 
 
   interface Product {
-    product:{
+    product: {
       image: string,
-      title:string,
-      price:number,
+      title: string,
+      price: number,
       id: number,
-      description:string
+      description: string
     }
   }
 
-//   interface IValue {
-//     image: string,
-//     title:string,
-//     price:number,
-//     id: number,
-//     description:string
-//  }
- 
+  interface IValue {
+    image: string,
+    title: string,
+    price: number,
+    id: string,
+    description: string,
+    quantity: any
+  }
+
   interface Cart {
-    cart :{
-      products:Array<any>
+    cart: {
+      products: Array<IValue>
     }
 
   }
-  let product = useSelector((state:Product) => state.product);
+  let product = useSelector((state: Product) => state.product);
   console.log("product", product);
 
-  let quentityData = useSelector((state:Cart) => state.cart);
+  let quentityData = useSelector((state: Cart) => state.cart);
   console.log(quentityData.products);
 
-  let item = quentityData.products.filter((obj:any) => obj.id == id);
+  let item = quentityData.products.filter((obj) => obj.id == id);
   console.log(item);
   let quentityShow;
   if (item.length != 0) {
+    console.log("hello jaydip");
     console.log(item[0].quantity);
     quentityShow = item[0].quantity;
   } else {
     quentityShow = "";
   }
   console.log("q", quentityShow);
+ 
+ 
 
+  // interface ProductData{
+  //   data: { 
+  //     name: string;
+  //      age: number 
+  //   }
+  // }
 
+  // const fetchProductDetail =  (id: string): void => {
+  //   const response =  axios
+  //     .get<ProductData>(`https://fakestoreapi.com/products/${id}`)
+  //     .catch((err) => {
+  //       console.log("Err: ", err);
+  //     });
+  //   console.log("............",response);
+    
+  //   dispatch(selectedProduct(response.data));
+  // };
 
-  const fetchProductDetail = async (id: string) => {
-    const response:any = await axios
-      .get(`https://fakestoreapi.com/products/${id}`)
-      .catch((err) => {
-        console.log("Err: ", err);
-      });
-    dispatch(selectedProduct(response.data));
+  interface Product {
+    id: number,
+    category: string,
+    description: string,
+    image: string,
+    price: number,
+    rating: object,
+    title: string
+  }
+
+  const fetchProductDetail = (id: string): void => {
+    const productUrl = `https://fakestoreapi.com/products/${id}`;
+    axios.get<Product[]>(productUrl).then((res) => {
+      console.log("res", res.data);
+      dispatch(selectedProduct(res.data)); 
+    });
   };
 
   useEffect(() => {
-    if (id && id !== "") 
-    fetchProductDetail(id);
+    if (id && id !== "")
+      fetchProductDetail(id);
   }, [id]);
 
- 
+
 
   return (
-    <>   
-     <UserHeader/>
-     <div className="container">
-     
-      <div className="row">
-        <div className="col-6">
-          <div className="details__image">
-            <img src={`${product.image}`} alt="" />
-          </div>
-        </div>
-        <div className="col-6">
-          <div className="details__name">{product.title}</div>
-          <div className="details__prices">
-          {currencyFormatter.format(product.price, { code: 'INR' })}
-          </div>
-          <div className="details__info">
-            <div className="details__incDec">
-              {quentityShow >= 1 ? (
-                <>
-                  <span
-                    className="dec"
-                    onClick={() =>
-                      dispatch({ type: "DEC", payload: product.id })
-                    }
-                  >
-                    {" "}
-                    <BsDash />
-                  </span>
-                  <span className="quantity">{quentityShow}</span>
-                  <span
-                    className="inc"
-                    onClick={() =>
-                      dispatch({ type: "INC", payload: product.id })
-                    }
-                  >
-                    <BsPlus />
-                  </span>
-                </>
-              ) : (
-                ""
-              )}
-              {quentityShow >= 1 ? (
-                ""
-              ) : (
-                <>
-                  <button
-                    className="btn-default"
-                    onClick={() =>
-                      dispatch({
-                        type: "ADD_TO_CART",
-                        payload: { product, quantity },
-                      })
-                    }
-                  >
-                    Add to cart
-                  </button>
-                </>
-              )}
+    <>
+      <UserHeader />
+      <div className="container">
+
+        <div className="row">
+          <div className="col-6">
+            <div className="details__image">
+              <img src={`${product.image}`} alt="" />
             </div>
           </div>
-          <div className="details__p">
-            <h4>Details</h4>
-            {product.description}
+          <div className="col-6">
+            <div className="details__name">{product.title}</div>
+            <div className="details__prices">
+              {currencyFormatter.format(product.price, { code: 'INR' })}
+            </div>
+            <div className="details__info">
+              <div className="details__incDec">
+                {quentityShow >= 1 ? (
+                  <>
+                    <span
+                      className="dec"
+                      onClick={() =>
+                        dispatch({ type: "DEC", payload: product.id })
+                      }
+                    >
+                      {" "}
+                      <BsDash />
+                    </span>
+                    <span className="quantity">{quentityShow}</span>
+                    <span
+                      className="inc"
+                      onClick={() =>
+                        dispatch({ type: "INC", payload: product.id })
+                      }
+                    >
+                      <BsPlus />
+                    </span>
+                  </>
+                ) : (
+                  ""
+                )}
+                {quentityShow >= 1 ? (
+                  ""
+                ) : (
+                  <>
+                    <button
+                      className="btn-default"
+                      onClick={() =>
+                        dispatch({
+                          type: "ADD_TO_CART",
+                          payload: { product, quantity },
+                        })
+                      }
+                    >
+                      Add to cart
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+            <div className="details__p">
+              <h4>Details</h4>
+              {product.description}
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </>
 
   );

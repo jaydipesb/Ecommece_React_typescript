@@ -35,9 +35,7 @@ const ProductListing = () => {
     title: string
   }
 
-  interface ProductResponse {
-    data: Product[]
-  }
+ 
 
   const [products, setProducts] = useState<Product[]>([]);
 
@@ -64,14 +62,10 @@ const ProductListing = () => {
 
 
 
-  const [filterTags, setFilterTags] = useState<any>([]);
+  const [filterTags, setFilterTags] = useState<string[]>([]);
   const [seachProduct, setsearchProduct] = useState("");
   console.log("seachProduct", seachProduct);
-  
-  interface Inode {
-    id: number,
-    name: string,
-  }
+
 
   const filterHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log("e", e);
@@ -91,7 +85,7 @@ const ProductListing = () => {
   if (filterTags.length > 0) {
     for (let tag in filterTags) {
       filteredData.push(
-        ...products.filter((product: { [x: string]: any; }) => product["category"] === filterTags[tag])
+        ...products.filter((product) => product["category"] === filterTags[tag])
       );
     }
   } else if (seachProduct !== "") {
