@@ -20,10 +20,7 @@ const Addproduct = ({ isModalVisible, setIsModalVisible }:{ isModalVisible : boo
     setState(info.file);
   };
  
-
-
   const onFinish = async (values:{category:string,description:string,image:string,price:string,title:string}) => {
-  
     const formData = new FormData();
     formData.append("category", values.category);
     formData.append("description", values.description);
