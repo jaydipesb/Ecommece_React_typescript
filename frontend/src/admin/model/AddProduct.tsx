@@ -3,12 +3,12 @@ import { UploadOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
 import axios from "axios";
 
-const Addproduct = ({ isModalVisible, setIsModalVisible }:{ isModalVisible : boolean; setIsModalVisible: (flage:boolean) => void;}) => {
+const Addproduct = ({ isModalVisible, setIsModalVisible }: { isModalVisible: boolean; setIsModalVisible: (flage: boolean) => void; }) => {
 
   const [state, setState] = useState("");
 
   console.log("state", state);
-  
+
   const handleOk = () => {
     setIsModalVisible(false);
   };
@@ -19,8 +19,8 @@ const Addproduct = ({ isModalVisible, setIsModalVisible }:{ isModalVisible : boo
   const handleChange = (info: { file: any; }) => {
     setState(info.file);
   };
- 
-  const onFinish = async (values:{category:string,description:string,image:string,price:string,title:string}) => {
+
+  const onFinish = async (values: { category: string, description: string, image: string, price: string, title: string }) => {
     const formData = new FormData();
     formData.append("category", values.category);
     formData.append("description", values.description);
@@ -29,9 +29,9 @@ const Addproduct = ({ isModalVisible, setIsModalVisible }:{ isModalVisible : boo
     formData.append("image", state);
     console.log(formData);
     // Display the key/value pairs
-// for (var pair of formData.entries()) {
-//   console.log(pair[0]+ ', ' + pair[1]); 
-// }
+    // for (var pair of formData.entries()) {
+    //   console.log(pair[0]+ ', ' + pair[1]); 
+    // }
     try {
       const response = await axios.post(
         "http://localhost:3000/api/addProduct",
@@ -85,7 +85,6 @@ const Addproduct = ({ isModalVisible, setIsModalVisible }:{ isModalVisible : boo
           >
             <Input />
           </Form.Item>
-
           <Form.Item
             label="Price"
             name="price"
@@ -147,7 +146,7 @@ const Addproduct = ({ isModalVisible, setIsModalVisible }:{ isModalVisible : boo
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </Upload>
           </Form.Item>
-          
+
           <Form.Item
             wrapperCol={{
               offset: 8,

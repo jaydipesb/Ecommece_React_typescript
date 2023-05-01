@@ -37,13 +37,15 @@ const ProductListing = () => {
 
  
 
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setAllProducts] = useState<Product[]>([]);
+  const dispatch = useDispatch();
 
   const fetchProducts = (): void => {
     const productUrl = "https://fakestoreapi.com/products";
     axios.get<Product[]>(productUrl).then((res) => {
       console.log("res", res.data);
-      setProducts(res.data);
+      setAllProducts(res.data);
+      dispatch(setProducts(res.data)); 
     });
   };
 
@@ -95,7 +97,7 @@ const ProductListing = () => {
       if (item.category.toLowerCase().includes(seachProduct.toLowerCase())) {
         console.log("item", item);
         return item;
-      }
+      } 
     });
     console.log(filterSearch);
     filteredData.push(...filterSearch);

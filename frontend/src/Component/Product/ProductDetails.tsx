@@ -34,6 +34,18 @@ const ProductDetails = () => {
     description: string,
     quantity: any
   }
+   
+  interface Product {
+    id: number,
+    category: string,
+    description: string,
+    image: string,
+    price: number,
+    rating: object,
+    title: string
+  }
+
+
 
   interface Cart {
     cart: {
@@ -41,6 +53,7 @@ const ProductDetails = () => {
     }
 
   }
+
   let product = useSelector((state: Product) => state.product);
   console.log("product", product);
 
@@ -58,42 +71,14 @@ const ProductDetails = () => {
     quentityShow = "";
   }
   console.log("q", quentityShow);
+
  
- 
-
-  // interface ProductData{
-  //   data: { 
-  //     name: string;
-  //      age: number 
-  //   }
-  // }
-
-  // const fetchProductDetail =  (id: string): void => {
-  //   const response =  axios
-  //     .get<ProductData>(`https://fakestoreapi.com/products/${id}`)
-  //     .catch((err) => {
-  //       console.log("Err: ", err);
-  //     });
-  //   console.log("............",response);
-    
-  //   dispatch(selectedProduct(response.data));
-  // };
-
-  interface Product {
-    id: number,
-    category: string,
-    description: string,
-    image: string,
-    price: number,
-    rating: object,
-    title: string
-  }
 
   const fetchProductDetail = (id: string): void => {
     const productUrl = `https://fakestoreapi.com/products/${id}`;
     axios.get<Product[]>(productUrl).then((res) => {
       console.log("res", res.data);
-      dispatch(selectedProduct(res.data)); 
+      dispatch(selectedProduct(res.data));
     });
   };
 
@@ -108,7 +93,6 @@ const ProductDetails = () => {
     <>
       <UserHeader />
       <div className="container">
-
         <div className="row">
           <div className="col-6">
             <div className="details__image">
